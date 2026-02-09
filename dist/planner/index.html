@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeamFlow MVP - Engagement Planner</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <a href="/" class="logo">
+          <div class="logo-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <span class="logo-text">TeamFlow</span>
+        </a>
+        <span class="badge">MVP</span>
+      </div>
+      <div class="header-center">
+        <h1 class="engagement-title">ABC Corp Annual Audit</h1>
+        <span class="engagement-meta">Jan 13-24, 2025 • 245/320 hrs</span>
+      </div>
+      <div class="header-right">
+        <button class="btn btn-secondary" id="managerToggle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span>Manager View</span>
+        </button>
+        <button class="btn btn-primary" id="exportBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span>Export CSV</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Sidebar - Team Members -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h2>Team</h2>
+          <button class="btn btn-icon" id="addMemberBtn" title="Add team member">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+          </button>
+        </div>
+        <div class="team-list" id="teamList">
+          <!-- Team members will be rendered here -->
+        </div>
+        <div class="sidebar-footer">
+          <div class="stats">
+            <div class="stat">
+              <span class="stat-value" id="totalHours">0</span>
+              <span class="stat-label">Total Hours</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value" id="budgetRemaining">75</span>
+              <span class="stat-label">Hours Left</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Timeline -->
+      <div class="timeline-container">
+        <!-- Timeline Header -->
+        <div class="timeline-header" id="timelineHeader">
+          <!-- Days will be rendered here -->
+        </div>
+
+        <!-- Timeline Grid -->
+        <div class="timeline-grid" id="timelineGrid">
+          <!-- Grid lines and tasks will be rendered here -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Add Task Modal -->
+    <div class="modal" id="taskModal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Add Task</h3>
+          <button class="btn btn-icon modal-close" id="closeModal">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+        <form class="modal-body" id="taskForm">
+          <div class="form-group">
+            <label for="taskName">Task Name *</label>
+            <input type="text" id="taskName" placeholder="e.g., Risk Assessment" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskMember">Team Member</label>
+              <select id="taskMember">
+                <!-- Options will be populated dynamically -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="taskDay">Day</label>
+              <select id="taskDay">
+                <!-- Options will be populated dynamically -->
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="taskStart">Start Time</label>
+              <select id="taskStart">
+                <option value="8">8:00 AM</option>
+                <option value="9">9:00 AM</option>
+                <option value="10">10:00 AM</option>
+                <option value="11">11:00 AM</option>
+                <option value="12">12:00 PM</option>
+                <option value="13">1:00 PM</option>
+                <option value="14">2:00 PM</option>
+                <option value="15">3:00 PM</option>
+                <option value="16">4:00 PM</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="taskDuration">Duration (hours)</label>
+              <select id="taskDuration">
+                <option value="1">1 hour</option>
+                <option value="2" selected>2 hours</option>
+                <option value="3">3 hours</option>
+                <option value="4">4 hours</option>
+                <option value="5">5 hours</option>
+                <option value="6">6 hours</option>
+                <option value="7">7 hours</option>
+                <option value="8">8 hours</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="taskPhase">Phase</label>
+            <select id="taskPhase">
+              <option value="planning">Planning & Risk Assessment</option>
+              <option value="control">Control Testing</option>
+              <option value="substantive">Substantive Procedures</option>
+              <option value="conclusion">Conclusion & Reporting</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="cancelTask">Cancel</button>
+            <button type="submit" class="btn btn-primary">Add Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Add Member Modal -->
+    <div class="modal" id="memberModal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Add Team Member</h3>
+          <button class="btn btn-icon modal-close" id="closeMemberModal">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+        <form class="modal-body" id="memberForm">
+          <div class="form-group">
+            <label for="memberName">Name *</label>
+            <input type="text" id="memberName" placeholder="e.g., John Smith" required>
+          </div>
+          <div class="form-group">
+            <label for="memberRole">Role</label>
+            <select id="memberRole">
+              <option value="Partner">Partner</option>
+              <option value="Manager">Manager</option>
+              <option value="Senior">Senior</option>
+              <option value="Staff" selected>Staff</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="memberColor">Color</label>
+            <div class="color-picker" id="colorPicker">
+              <button type="button" class="color-option active" data-color="blue" style="--color: #3b82f6;"></button>
+              <button type="button" class="color-option" data-color="green" style="--color: #22c55e;"></button>
+              <button type="button" class="color-option" data-color="purple" style="--color: #a855f7;"></button>
+              <button type="button" class="color-option" data-color="amber" style="--color: #f59e0b;"></button>
+              <button type="button" class="color-option" data-color="red" style="--color: #ef4444;"></button>
+              <button type="button" class="color-option" data-color="cyan" style="--color: #06b6d4;"></button>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="cancelMember">Cancel</button>
+            <button type="submit" class="btn btn-primary">Add Member</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+      <span class="toast-message"></span>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
